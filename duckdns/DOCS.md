@@ -72,15 +72,17 @@ If you specify a URL here, contents of the resource it points to will be
 fetched and used as the address. This enables getting the address using
 a service like https://api.ipify.org/ or https://ipv4.text.wtfismyip.com
 
+If you specify `none`, the IPv4 address will not be updated at all. This is useful if you can only reach your home network by IPv6, like in the case of a "Dual-Stack Lite" connection.
+
+**Note**: _If `none` you should make sure the IPv4 entry is blanked out in the DuckDNS web-UI_
+
 ### Option: `ipv6` (optional)
 
-By default, Duck DNS will auto detect your IPv6 address and use that.
+By default, this addon will auto detect your IPv6 address and use that.
 This option allows you to override the auto-detection and specify an
 IPv6 address manually.
 
-If you specify a URL here, contents of the resource it points to will be
-fetched and used as the address. This enables getting the address using
-a service like https://api6.ipify.org/ or https://ipv6.text.wtfismyip.com
+If you specify an interface here, that interface's address will be fetched and used as the address.
 
 ### Option: `token`
 

@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.12.5
+
+- Fix IPv6 detection & allow skipping IPv4
+
 ## 1.12.4
 
 - Fix bug where IPv6 got the value of IPv4

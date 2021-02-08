@@ -1,10 +1,10 @@
 {
   "build_from": {
-    "aarch64": "homeassistant/aarch64-base:3.10",
-    "amd64": "homeassistant/amd64-base:3.10",
-    "armhf": "homeassistant/armhf-base:3.10",
-    "armv7": "homeassistant/armv7-base:3.10",
-    "i386": "homeassistant/i386-base:3.10"
+    "aarch64": "homeassistant/aarch64-base:3.12",
+    "amd64": "homeassistant/amd64-base:3.12",
+    "armhf": "homeassistant/armhf-base:3.12",
+    "armv7": "homeassistant/armv7-base:3.12",
+    "i386": "homeassistant/i386-base:3.12"
   },
   "args": {
     "DEHYDRATED_VERSION": "0.6.5"
