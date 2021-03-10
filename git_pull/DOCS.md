@@ -15,6 +15,9 @@ of your Home Assistant configuration files exists in the Github repository. Othe
 your local machine configuration folder will be overwritten with an empty configuration 
 folder and you will need to restore from a backup.
 
+Also make sure you have access to your system via SSH or to the homeassistant filesystem
+in case you have to restore files from backup.
+
 ## How to use
 
 In the configuration section, set the repository field to your repository's

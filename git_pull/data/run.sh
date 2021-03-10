@@ -20,6 +20,24 @@ REPEAT_INTERVAL=$(jq --raw-output '.repeat.interval' $CONFIG_PATH)
 ################
 
 #### functions ####
+function create_backup {
+    BACKUP_LOCATION="/tmp/config-$(date +%Y-%m-%d_%H-%M-%S)"
+    
+    echo "[Info] Backup configuration to $BACKUP_LOCATION"
+    mkdir "${BACKUP_LOCATION}" || { echo "[Error] Creation of backup directory failed"; exit 1; }
+    cp -rf /config/* "${BACKUP_LOCATION}" || { echo "[Error] Copy files to backup directory failed"; exit 1; }
+}
+
+function revert_config {
+    echo "[Info] Revert config from backup $BACKUP_LOCATION and delete backup"
+    cp -rf "${BACKUP_LOCATION}/*" /config/
+    delete_backup
+}
+
+function delete_backup {
+    rm -rf "${BACKUP_LOCATION}"
+}
+
 function add-ssh-key {
     echo "[Info] Start adding SSH key"
     mkdir -p ~/.ssh
@@ -40,22 +58,14 @@ function add-ssh-key {
 }
 
 function git-clone {
-    # create backup
-    BACKUP_LOCATION="/tmp/config-$(date +%Y-%m-%d_%H-%M-%S)"
-    echo "[Info] Backup configuration to $BACKUP_LOCATION"
-
-    mkdir "${BACKUP_LOCATION}" || { echo "[Error] Creation of backup directory failed"; exit 1; }
-    cp -rf /config/* "${BACKUP_LOCATION}" || { echo "[Error] Copy files to backup directory failed"; exit 1; }
-
-    # remove config folder content
-    rm -rf /config/{,.[!.],..?}* || { echo "[Error] Clearing /config failed"; exit 1; }
+    # remove all yaml from config folder
+    # TODO: Is removing really necessary? If all relevant files are under version control, 
+    # deletion could be done via Git either.
+    find /config/ -name "*.yaml" -delete || { echo "[Error] Clearing /config failed"; revert_config; exit 1; }
 
     # git clone
     echo "[Info] Start git clone"
-    git clone "$REPOSITORY" /config || { echo "[Error] Git clone failed"; exit 1; }
-
-    # try to copy non yml files back
-    cp "${BACKUP_LOCATION}" "!(*.yaml)" /config 2>/dev/null
+    git clone "$REPOSITORY" /config || { echo "[Error] Git clone failed"; revert_config; exit 1; }
 
     # try to copy secrets file back
     cp "${BACKUP_LOCATION}/secrets.yaml" /config 2>/dev/null
@@ -213,7 +223,8 @@ function validate-config {
                 echo "[Info] Local configuration has changed. Restart required."
             fi
         else
-            echo "[Error] Configuration updated but it does not pass the config check. Do not restart until this is fixed!"
+            echo "[Error] Configuration updated but it does not pass the config check. Config is reverted from Backup!"
+            revert_config
         fi
     else
         echo "[Info] Nothing has changed."
@@ -226,11 +237,14 @@ function validate-config {
 cd /config || { echo "[Error] Failed to cd into /config"; exit 1; }
 
 while true; do
+
     check-ssh-key
     setup-user-password
+    create_backup
     if git-synchronize ; then
         validate-config
     fi
+    delete_backup
      # do we repeat?
     if [ ! "$REPEAT_ACTIVE" == "true" ]; then
         exit 0

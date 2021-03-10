@@ -1,5 +1,10 @@
 # Changelog
 
+## 7.12.2
+
+- Added automatic backup recovery
+- Corrected too harsh deletion of config files
+
 ## 7.12.1
 
 - Update options schema for passwords
