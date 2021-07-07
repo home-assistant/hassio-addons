@@ -136,6 +136,21 @@ configuration. If you installed Hassio on another distribution of Linux, you nee
 follow the installation guide for the UART USB to setup the UART USB interface on
 your computer.
 
+## BidCos Errors / Coming from raspmatic/pivccu ?
+
+It is recommended to flash the HM-MOD-RPI-PCB again as raspmatic uses a modified firmware as far as we know.
+This causes strange issues with BidCos init
+The logs look simmilar to:
+- CCU2CoprocessorCommand::CCU2CoprocessorCommand(): Message too small: 2 byte
+- CCU2CommController::handleIncomingSerialFrame(): Command not parseable. 
+- CCU2CommController::waitForCoProcessorResponse(): Timeout while waiting for response.
+- <Error> No BidCoS-Interface available
+  
+If you have those kind of issues and your module was never used with raspmatic you can try this anyway.
+  
+To flash the coprocessor firmware one can e.g follow this guide(works from within hassos):
+https://gist.github.com/FloThinksPi/a2cc6e0e8d106ca9e6378c8c6c61ee67
+
 ## Support
 
 Got questions?
