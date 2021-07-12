@@ -96,6 +96,10 @@ elif [ "${CHALLENGE}" == "dns" ] && [ "${DNS_PROVIDER}" == "dns-njalla" ]; then
     bashio::config.require 'dns.njalla_token'
     PROVIDER_ARGUMENTS+=("--authenticator" "certbot-dns-njalla:dns-njalla" "--certbot-dns-njalla:dns-njalla-credentials" /data/dnsapikey "--certbot-dns-njalla:dns-njalla-propagation-seconds" "${PROPAGATION_SECONDS}")
 
+# rfc2136
+elif [ "${CHALLENGE}" == "dns" ] && [ "${DNS_PROVIDER}" == "rfc2136" ]; then
+    PROVIDER_ARGUMENTS+=("--${DNS_PROVIDER}" "--${DNS_PROVIDER}-credentials" /data/dnsapikey "--certbot-${DNS_PROVIDER}:${DNS_PROVIDER}-propagation-seconds" "${PROPAGATION_SECONDS}"
+
 #All others
 else
     PROVIDER_ARGUMENTS+=("--${DNS_PROVIDER}" "--${DNS_PROVIDER}-credentials" /data/dnsapikey)
