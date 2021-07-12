@@ -151,7 +151,7 @@ function git-synchronize {
             case "$GIT_COMMAND" in
                 pull)
                     echo "[Info] Start git pull..."
-                    git pull || { echo "[Error] Git pull failed"; return 1; }
+                    git pull --ff-only || { echo "[Error] Git pull failed"; return 1; }
                     ;;
                 reset)
                     echo "[Info] Start git reset..."
