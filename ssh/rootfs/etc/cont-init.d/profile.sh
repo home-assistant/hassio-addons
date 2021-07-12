@@ -10,6 +10,14 @@ if ! bashio::fs.file_exists /data/.bash_profile; then
     chmod 600 /data/.bash_history
 fi
 
+# Persist tmux configuration by redirecting .tmux.conf to /data
+if ! bashio::fs.file_exists /data/.tmux.conf; then
+    cp /root/.tmux.conf /data/.tmux.conf \
+	|| bashio::exit.nok 'Failed to create .tmux.conf file'
+
+fi
+ln -s -f /data/.tmux.conf /root/.tmux.conf
+
 # Make Home Assistant TOKEN available on the CLI
 mkdir -p /etc/profile.d
 bashio::var.json \
