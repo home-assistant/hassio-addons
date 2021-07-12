@@ -64,6 +64,20 @@ if bashio::config.true 'customize.active'; then
     sed -i "s|#include /share/nginx_proxy/.*|include /share/$CUSTOMIZE_SERVERS;|" /etc/nginx.conf
 fi
 
+if bashio::config.true 'security.active'; then
+    SECURITY_MODE=$(bashio::config 'security.mode')
+
+    # Enable ModSecurity
+    sed -i -e "s|#load_module modules/ngx_http_modsecurity_module.so;|load_module modules/ngx_http_modsecurity_module.so;|" \
+        -e "s|#modsecurity on;|modsecurity on;|" \
+        -e "s|#modsecurity_rules_file /etc/nginx/modsec/main.conf;|modsecurity_rules_file /etc/nginx/modsec/main.conf;|" \
+        /etc/nginx.conf
+
+
+    # Configure ModSecurity run mode
+    sed -i "s/%%SECURITY_MODE%%/$SECURITY_MODE/g" /etc/nginx/modsec/modsecurity.conf
+fi
+
 # start server
 bashio::log.info "Running nginx..."
 exec nginx -c /etc/nginx.conf < /dev/null

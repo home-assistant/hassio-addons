@@ -20,6 +20,10 @@
       "active": false,
       "default": "nginx_proxy_default*.conf",
       "servers": "nginx_proxy/*.conf"
+    },
+    "security": {
+      "active": false,
+      "mode": "DetectionOnly"
     }
   },
   "schema": {
@@ -32,6 +36,10 @@
       "active": "bool",
       "default": "str",
       "servers": "str"
+    },
+    "security": {
+      "active": "bool",
+      "mode": "list(DetectionOnly|On)"
     }
   },
   "image": "homeassistant/{arch}-addon-nginx_proxy"

@@ -5,5 +5,10 @@
     "armhf": "homeassistant/armhf-base:3.11",
     "armv7": "homeassistant/armv7-base:3.11",
     "i386": "homeassistant/i386-base:3.11"
+  },
+  "args": {
+    "NGINX_VERSION": "1.16.1",
+    "MODSEC_BRANCH": "v3/master",
+    "OWASP_BRANCH": "v3.3/master"
   }
 }
