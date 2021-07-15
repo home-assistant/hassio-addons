@@ -24,8 +24,10 @@ Example add-on configuration:
 
 ```yaml
 defaults:
-  - 8.8.8.8
-  - 8.8.4.4
+  - 1.2.3.4
+  - 4.3.2.1
+  - 11:22:33::44
+  - 44:33:22::11
 forwards:
   - domain: mystuff.local
     server: 192.168.1.40
@@ -44,7 +46,8 @@ services:
 
 The defaults are upstream DNS servers, where DNS requests that can't
 be handled locally, are forwarded to. By default it is configured to have
-Google's public DNS servers: `"8.8.8.8", "8.8.4.4"`.
+the public DNS servers of the providers AdGuard, Cloudflare, Google, Neustar
+and OpenNIC.
 
 Port can be specified using # separator, eg. `"192.168.1.2#1053"`
 
