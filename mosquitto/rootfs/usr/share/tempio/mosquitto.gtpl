@@ -1,10 +1,6 @@
 protocol mqtt
 user root
 log_dest stdout
-log_type error
-log_type warning
-log_type notice
-log_type information
 persistence true
 persistence_location /data/
 
