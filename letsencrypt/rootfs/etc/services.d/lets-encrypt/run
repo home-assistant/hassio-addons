@@ -6,6 +6,7 @@ CERT_DIR=/data/letsencrypt
 WORK_DIR=/data/workdir
 PROVIDER_ARGUMENTS=()
 ACME_CUSTOM_SERVER_ARGUMENTS=()
+CHALLENGE_ARGUMENTS=()
 
 EMAIL=$(bashio::config 'email')
 DOMAINS=$(bashio::config 'domains')
@@ -118,18 +119,15 @@ for line in $DOMAINS; do
 done
 echo "$DOMAINS" > /data/domains.gen
 
-# Generate a new certificate if necessary or expand a previous certificate if domains has changed
-if [ "$CHALLENGE" == "dns" ]; then
-    certbot certonly --non-interactive --keep-until-expiring --expand \
-        --email "$EMAIL" --agree-tos \
-        --config-dir "$CERT_DIR" --work-dir "$WORK_DIR" \
-        --preferred-challenges "$CHALLENGE" "${DOMAIN_ARR[@]}" "${PROVIDER_ARGUMENTS[@]}"
-else
-    certbot certonly --non-interactive --keep-until-expiring --expand \
-        --email "$EMAIL" --agree-tos \
-        --config-dir "$CERT_DIR" --work-dir "$WORK_DIR" \
-        --preferred-challenges "$CHALLENGE" "${DOMAIN_ARR[@]}" "${ACME_CUSTOM_SERVER_ARGUMENTS[@]}" --standalone
+if [ "$CHALLENGE" == "http" ]; then
+    CHALLENGE_ARGUMENTS+=("--standalone")
 fi
+
+# Generate a new certificate if necessary or expand a previous certificate if domains has changed
+certbot certonly --non-interactive --keep-until-expiring --expand \
+    --email "$EMAIL" --agree-tos \
+    --config-dir "$CERT_DIR" --work-dir "$WORK_DIR" \
+    --preferred-challenges "$CHALLENGE" "${DOMAIN_ARR[@]}" "${ACME_CUSTOM_SERVER_ARGUMENTS[@]}" "${CHALLENGE_ARGUMENTS[@]}"
 
 # Get the last modified cert directory and copy the cert and private key to store
 # shellcheck disable=SC2012
