@@ -1,0 +1,28 @@
+{
+  "name": "ACME.sh",
+  "version": "1",
+  "slug": "acme_sh",
+  "description": "ACME.sh add-on for generating Let's Encrypt certificates.",
+  "arch": ["armhf", "armv7", "aarch64", "amd64", "i386"],
+  "url": "https://github.com/home-assistant/hassio-addons/tree/master/acme_sh",
+  "startup": "once",
+  "boot": "auto",
+  "map": ["ssl:rw"],
+  "options": {
+    "domains": [null],
+    "certfile": "fullchain.pem",
+    "keyfile": "privkey.pem",
+    "dns": {}
+  },
+  "schema": {
+    "domains": ["str"],
+    "certfile": "str",
+    "keyfile": "str",
+    "dns": {
+      "provider": "list(dns_freedns)?",
+      "username": "str?",
+      "password": "str?"
+    }
+  },
+  "image": "homeassistant/{arch}-addon-acme_sh"
+}
