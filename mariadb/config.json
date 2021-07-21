@@ -1,6 +1,6 @@
 {
   "name": "MariaDB",
-  "version": "2.4.0",
+  "version": "2.4.1",
   "slug": "mariadb",
   "description": "A SQL database server",
   "url": "https://github.com/home-assistant/hassio-addons/tree/master/mariadb",
@@ -8,8 +8,8 @@
   "startup": "system",
   "init": false,
   "timeout": 20,
-  "snapshot_pre": "/bin/s6-svc -wU -u /run/s6/services/mariadb-lock/",
-  "snapshot_post": "/bin/s6-svc -wd -d /run/s6/services/mariadb-lock/",
+  "backup_pre": "/bin/s6-svc -wU -u /run/s6/services/mariadb-lock/",
+  "backup_post": "/bin/s6-svc -wd -d /run/s6/services/mariadb-lock/",
   "services": ["mysql:provide"],
   "ports": {
     "3306/tcp": null

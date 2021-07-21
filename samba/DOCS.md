@@ -25,7 +25,7 @@ This addon exposes the following directories over smb (samba):
 Directory | Description
 -- | --
 `addons` | This is for your local add-ons.
-`backup` | This is for your snapshots.
+`backup` | This is for your backups.
 `config` | This is for your Home Assistant configuration.
 `media` | This is for local media files.
 `share` | This is for your data that is shared between add-ons and Home Assistant.

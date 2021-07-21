@@ -1,6 +1,6 @@
 {
   "name": "deCONZ",
-  "version": "6.9.0",
+  "version": "6.9.1",
   "slug": "deconz",
   "description": "Control a Zigbee network with ConBee or RaspBee by Dresden Elektronik",
   "arch": ["amd64", "armhf", "aarch64"],
@@ -29,7 +29,7 @@
   "apparmor": false,
   "privileged": ["SYS_RAWIO"],
   "devices": ["/dev/mem"],
-  "snapshot_exclude": ["*/otau"],
+  "backup_exclude": ["*/otau"],
   "options": {
     "device": null
   },

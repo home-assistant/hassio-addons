@@ -1,6 +1,6 @@
 #!/usr/bin/with-contenv bashio
 # ==============================================================================
-# Start MariaDB client to lock tables (for snapshots)
+# Start MariaDB client to lock tables (for backups)
 # ==============================================================================
 
 bashio::log.info "Lock tables using mariadb client..."
